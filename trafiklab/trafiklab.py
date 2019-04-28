@@ -7,7 +7,6 @@ locale.setlocale(locale.LC_ALL, 'sv_SE.UTF-8')
 
 CONFIG_FILE = "trafiklab.conf"
 
-
 parser = ConfigParser()
 parser.read(CONFIG_FILE)
 
@@ -41,22 +40,24 @@ def realtimeinfo(stationid):
    urlrealtimeinfo = "http://api.sl.se/api2/realtimedeparturesV4.json?key={0}&siteid={1}&timewindow={2}".format(API_KEY_REALTIDSINFORMATION, stationid, timewindow)
 
    response = requests.get(urlrealtimeinfo)
-#   print(response.json())
+   print(response.json())
    print("Buses")
    for row in response.json()['ResponseData']['Buses']:
+      name = (row['StopAreaName'])
       whentable = (row['DisplayTime'])
-      busnumber = (row['LineNumber'])
+      number = (row['LineNumber'])
       whereto = (row['Destination'])
 	  
-      print(busnumber + " avgår om: " + whentable + " mot: " + whereto)
+      print(number + " avgår om: " + whentable + " mot: " + whereto + " (" + name + ")")
 
    print("Metros")
    for row in response.json()['ResponseData']['Metros']:
+      name = (row['StopAreaName'])
       whentable = (row['DisplayTime'])
-      busnumber = (row['LineNumber'])
+      number = (row['LineNumber'])
       whereto = (row['Destination'])
 	  
-      print(busnumber + " avgår om: " + whentable + " mot: " + whereto)
+      print(number + " avgår om: " + whentable + " mot: " + whereto + " (" + name + ")")
 
 
 	  
@@ -66,5 +67,7 @@ def realtimeinfo(stationid):
 #findstation("Fridhemsplan")
 
 #Fridhemsplan = 9115
-realtimeinfo(9115) # 1202, 1207
+#Polhemsgatan = 1202
+#Pontonjärparken = 1207
+realtimeinfo(1202) # 1202, 1207
 
